@@ -33,7 +33,7 @@ export const STATUS = {
     date: '2026-10-02',
     title: '그물 유도 작전',
   },
-  updatedAt: '2026-09-30T09:00:00+09:00',
+  updatedAt: '2026-10-01T07:30:00+09:00',
 };
 
 export const MODE_TEXT: Record<Mode, { badge: string; line: string }> = {
@@ -57,6 +57,15 @@ export const TIMELINE: TimelineItem[] = [
     title: '북항 친수공원 수로에서 첫 발견',
     body: '부산 동구 북항 친수공원 인공 수로에서 상어가 처음 목격됐어요.',
     source: FNNEWS,
+  },
+  {
+    date: '2026-09-25',
+    title: '추석 연휴 첫날 10만 2천 명',
+    body: '연휴 첫날 하루에만 약 10만 2천 명이 부캉이를 보러 북항을 찾았어요.',
+    source: {
+      name: '파이낸셜뉴스',
+      url: 'https://www.fnnews.com/news/202609250928248871',
+    },
   },
   {
     date: '2026-09-28',

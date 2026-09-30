@@ -13,7 +13,7 @@ function prerenderStatus(): Plugin {
       const values: Record<string, string> = {
         SITE_URL: siteUrl,
         SHARK_SVG,
-        MODE: v.mode,
+        STATUS_MODE: v.mode,
         MODE_BADGE: escapeHtml(v.badge),
         MODE_LINE: escapeHtml(v.line),
         DAY_LABEL: escapeHtml(v.dayLabel),

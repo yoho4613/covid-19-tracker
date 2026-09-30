@@ -9,7 +9,7 @@ export interface Tier {
 export const LURE_LIMIT = 45; // 초
 export const FOLLOW_DURATION = 30; // 초
 
-// api/share.js 와 같은 기준을 쓴다 (tests/tiers.test.mjs 에서 확인)
+// api/share.js 와 같은 기준을 쓴다 (tests/share.test.mjs 에서 확인)
 export const LURE_THRESHOLDS = [12, 17, 24, 33, LURE_LIMIT];
 export const FOLLOW_THRESHOLDS = [90, 75, 55, 35];
 

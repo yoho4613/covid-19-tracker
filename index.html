@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>부캉이 트래커 | 북항 상어 부캉이 오늘 상태 · 미니게임</title>
+    <meta name="description" content="부산 북항 친수공원 수로의 상어 '부캉이'가 오늘 며칠째 머무는지, 바다로 돌아갈 작전은 언제인지 한눈에. 부캉이 유인하기·따라다니기 미니게임도 즐겨보세요." />
+    <meta name="theme-color" content="#0b3a5b" />
+    <link rel="canonical" href="%SITE_URL%/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="부캉이 트래커" />
+    <meta property="og:title" content="부캉이 트래커 | 북항 상어 부캉이 오늘 상태" />
+    <meta property="og:description" content="부캉이 지금 어디? 며칠째 버티는 중인지 확인하고 바다까지 유인해 보세요 🦈🌊" />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og/default.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap" />
+  </head>
+  <body>
+    <div id="app">
+      <main id="home">
+        <header class="topbar">
+          <a class="brand" href="#/">부캉이 트래커</a>
+          <span class="unofficial">비공식 팬사이트</span>
+        </header>
+
+        <section class="hero card" aria-labelledby="hero-title">
+          <div class="hero-water">
+            <div class="hero-shark">%SHARK_SVG%</div>
+            <div class="bubbles" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <p class="badge" id="status-badge" data-mode="%MODE%">%MODE_BADGE%</p>
+          <h1 id="hero-title"><span class="hero-label" id="day-label">%DAY_LABEL%</span> <strong id="day-count">%DAY_COUNT%</strong><span class="hero-unit" id="day-unit">%DAY_UNIT%</span></h1>
+          <p class="hero-line" id="status-line">%MODE_LINE%</p>
+          <p class="updated">마지막 업데이트 <span id="updated-at">%UPDATED%</span> · 뉴스 기준</p>
+        </section>
+
+        <section class="card countdown" id="countdown" aria-live="polite">
+          <div>
+            <p class="eyebrow" id="next-title">%NEXT_TITLE%</p>
+            <p class="countdown-date" id="next-date">%NEXT_DATE%</p>
+          </div>
+          <p class="dday" id="next-dday">%NEXT_DDAY%</p>
+        </section>
+
+        <section class="card cheer" aria-labelledby="cheer-title">
+          <h2 id="cheer-title">부캉이 응원하기</h2>
+          <p class="muted">누를 때마다 전국 응원 수가 올라가요</p>
+          <button class="cheer-btn" id="cheer-btn" type="button">부캉아 무사히 돌아가! 🙏</button>
+          <div class="cheer-stats">
+            <span>내 응원 <b id="my-cheers">0</b></span>
+            <span class="global-only" hidden>전국 응원 <b id="all-cheers">-</b></span>
+          </div>
+        </section>
+
+        <section class="games" aria-labelledby="games-title">
+          <h2 id="games-title">부캉이 미니게임</h2>
+          <a class="game-card lure" href="#/lure">
+            <span class="game-emoji" aria-hidden="true">🐟</span>
+            <span>
+              <strong>부캉이 유인하기</strong>
+              <small>먹이로 길을 만들어 바다까지 데려가요</small>
+            </span>
+            <span class="game-go" aria-hidden="true">▶</span>
+          </a>
+          <a class="game-card follow" href="#/follow">
+            <span class="game-emoji" aria-hidden="true">🎯</span>
+            <span>
+              <strong>부캉이 따라다니기</strong>
+              <small>30초 동안 부캉이를 놓치지 마세요</small>
+            </span>
+            <span class="game-go" aria-hidden="true">▶</span>
+          </a>
+          <p class="global-only muted center" hidden>지금까지 게임 속에서 바다로 보낸 부캉이 <b id="all-released">-</b>마리</p>
+        </section>
+
+        <div class="ad-slot" data-ad="home"></div>
+
+        <section class="card" aria-labelledby="profile-title">
+          <h2 id="profile-title">부캉이 프로필</h2>
+          <dl class="profile">%PROFILE%</dl>
+        </section>
+
+        <section class="card" aria-labelledby="timeline-title">
+          <h2 id="timeline-title">부캉이 타임라인</h2>
+          <ol class="timeline">%TIMELINE%</ol>
+        </section>
+
+        <section class="card goods" id="goods" hidden aria-labelledby="goods-title">
+          <h2 id="goods-title">부캉이 생각나는 상어 굿즈</h2>
+          <p class="disclosure" id="goods-disclosure"></p>
+          <div class="goods-list" id="goods-list"></div>
+        </section>
+
+        <section class="card safety" aria-labelledby="safety-title">
+          <h2 id="safety-title">부캉이 보러 가기 전에</h2>
+          <ul>
+            <li>현장 안전요원과 통제선 안내를 꼭 따라 주세요.</li>
+            <li>수로에 들어가거나 먹이·물건을 던지지 마세요. 게임은 게임일 뿐이에요.</li>
+            <li>부캉이가 놀라지 않게 큰 소리와 플래시는 피해 주세요.</li>
+          </ul>
+        </section>
+
+        <footer class="footer">
+          <p>부캉이 트래커는 부산시·해경 등 기관과 관계없는 비공식 팬사이트예요. 상태 정보는 언론 보도를 바탕으로 정리하며 실시간 위치 추적이 아니에요.</p>
+          <p><a href="/privacy.html">개인정보처리방침</a></p>
+        </footer>
+      </main>
+
+      <section id="game-view" hidden>
+        <header class="game-bar">
+          <a class="back" href="#/">← 트래커</a>
+          <strong id="game-title"></strong>
+          <span class="game-bar-spacer"></span>
+        </header>
+        <div class="stage" id="stage"></div>
+        <div class="overlay" id="overlay" hidden></div>
+      </section>
+    </div>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

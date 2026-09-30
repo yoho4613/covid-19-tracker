@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# 부캉이 트래커
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+부산 북항 친수공원 수로의 상어 '부캉이' 상태를 보여 주고, 미니게임 두 개(유인하기, 따라다니기)를 제공하는 비공식 팬사이트입니다.
 
-## Available Scripts
+- 프론트엔드: Vite + TypeScript (프레임워크 없음), 게임은 Canvas
+- 서버: Vercel Functions (`api/`)
+  - `api/stats.js`: 전국 응원 수, 플레이 수, 전국 상위 % (Upstash Redis)
+  - `api/share.js`: `/s/:game/:score` 공유 링크의 미리보기 페이지
 
-In the project directory, you can run:
+## 개발
 
-### `npm start`
+```bash
+npm install
+npm run dev        # 로컬 개발 서버
+npm run build      # dist/ 로 빌드
+npm test           # API·날짜 계산 테스트
+npm run typecheck
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 운영
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 부캉이 상태 바꾸기
 
-### `npm test`
+`src/data/status.ts`만 고쳐서 배포하면 됩니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `mode`: `staying`(수로 체류 중), `operation`(작전 진행 중), `released`(바다로 귀환), `extended`(버티기 연장)
+- `released`로 바꿀 때는 `releasedOn`에 날짜를 넣습니다.
+- 새 소식은 `TIMELINE`에 출처 링크와 함께 추가합니다. 확인된 사실만 적습니다.
 
-### `npm run build`
+### 광고, 제휴, 공유 설정
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`src/config.ts`에 값을 넣으면 해당 영역이 나타납니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- `adfit.home`, `adfit.result`: 카카오 애드핏 광고 단위 ID
+- `goods`: 쿠팡 파트너스 링크 (대가성 문구는 자동으로 표시)
+- `kakaoJsKey`: 카카오 개발자 JavaScript 키 (카카오 개발자 콘솔에 사이트 도메인 등록 필요)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 전국 통계 (선택)
 
-### `npm run eject`
+Vercel 프로젝트의 Storage 탭에서 Upstash Redis를 연결하면 `KV_REST_API_URL`, `KV_REST_API_TOKEN`이 자동으로 설정되고 전국 응원 수와 순위가 켜집니다. 연결하지 않아도 사이트는 정상 동작합니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 공유 미리보기 이미지
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+게임 등급 이름을 바꾸면 OG 이미지를 다시 만듭니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+CHROME=/path/to/headless_shell FONT=/path/to/Jua-Regular.ttf npm run og
+```

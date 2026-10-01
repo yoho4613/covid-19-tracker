@@ -16,6 +16,11 @@ export const CONFIG = {
   goods: [] as GoodsItem[],
   // 카카오 개발자 JavaScript 키 (카카오톡 공유 버튼)
   kakaoJsKey: '',
+  // 검색 등록 소유 확인 코드 (meta content 값)
+  verification: {
+    naver: '',
+    google: '',
+  },
 };
 
 export const COUPANG_DISCLOSURE =

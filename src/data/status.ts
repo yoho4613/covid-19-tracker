@@ -36,6 +36,24 @@ export const STATUS = {
   updatedAt: '2026-10-01T07:30:00+09:00',
 };
 
+// 부캉이에게는 위치 추적 장치가 없다. 지도에는 보도된 체류 장소를 "일대"로만 표시하고,
+// 실시간 위치는 현장 관람객 제보(api/sightings.js)로 추정한다.
+export const LOCATION = {
+  name: '북항 친수공원 경관수로',
+  address: '부산 동구 이순신대로 164',
+  lat: 35.1144,
+  lng: 129.0464,
+  radiusM: 350,
+  access: '도시철도 1호선 부산역 6번 출구에서 걸어서 약 15분',
+  source: {
+    name: '더트래블뉴스',
+    url: 'https://thetravelnews.co.kr/2026/08/busan-north-port-waterfront-park-starlight-waterway/',
+  } as Source,
+};
+
+// 제보를 받는 범위 (api/sightings.js 의 BOUNDS 와 같아야 한다)
+export const SIGHTING_BOUNDS = { minLat: 35.104, maxLat: 35.125, minLng: 129.034, maxLng: 129.06 };
+
 export const MODE_TEXT: Record<Mode, { badge: string; line: string }> = {
   staying: { badge: '수로 체류 중', line: '아직 북항 친수공원 수로에 머물고 있어요' },
   operation: { badge: '유도 작전 진행 중', line: '지금 바다로 돌려보내는 작전이 진행되고 있어요' },

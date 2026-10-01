@@ -3,19 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>부캉이 트래커 | 북항 상어 부캉이 오늘 상태 · 미니게임</title>
-    <meta name="description" content="부산 북항 친수공원 수로의 상어 '부캉이'가 오늘 며칠째 머무는지, 바다로 돌아갈 작전은 언제인지 한눈에. 부캉이 유인하기·따라다니기 미니게임도 즐겨보세요." />
+    <title>부캉이 트래커 | 부캉이 위치 지도 · 오늘 상태 · 미니게임</title>
+    <meta name="description" content="부산 북항 상어 '부캉이' 지금 어디? 위치 지도와 현장 제보, 며칠째 머무는지, 바다로 돌아갈 그물 작전 일정, 보러 가는 길까지 한눈에. 부캉이 유인하기·따라다니기 미니게임도 즐겨보세요." />
     <meta name="theme-color" content="#0b3a5b" />
     <link rel="canonical" href="%SITE_URL%/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="부캉이 트래커" />
-    <meta property="og:title" content="부캉이 트래커 | 북항 상어 부캉이 오늘 상태" />
+    <meta property="og:title" content="부캉이 트래커 | 부캉이 위치 지도 · 오늘 상태" />
     <meta property="og:description" content="부캉이 지금 어디? 며칠째 버티는 중인지 확인하고 바다까지 유인해 보세요 🦈🌊" />
     <meta property="og:url" content="%SITE_URL%/" />
     <meta property="og:image" content="%SITE_URL%/og/default.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
+    %VERIFY_META%
+    <script type="application/ld+json">%JSON_LD%</script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,6 +40,7 @@
           <h1 id="hero-title"><span class="hero-label" id="day-label">%DAY_LABEL%</span> <strong id="day-count">%DAY_COUNT%</strong><span class="hero-unit" id="day-unit">%DAY_UNIT%</span></h1>
           <p class="hero-line" id="status-line">%MODE_LINE%</p>
           <p class="updated">마지막 업데이트 <span id="updated-at">%UPDATED%</span> · 뉴스 기준</p>
+          <button class="share-btn" id="share-site" type="button">친구에게 부캉이 소식 보내기</button>
         </section>
 
         <section class="card countdown" id="countdown" aria-live="polite">
@@ -48,13 +51,32 @@
           <p class="dday" id="next-dday">%NEXT_DDAY%</p>
         </section>
 
+        <section class="card map-card" aria-labelledby="map-title">
+          <div class="map-head">
+            <h2 id="map-title">부캉이 위치 지도</h2>
+            <span class="live-chip">보도 + 현장 제보</span>
+          </div>
+          <p class="map-summary" id="map-summary"><span><b>보도 기준</b> %LOCATION_NAME% 일대</span></p>
+          <div class="map" id="map"><p class="map-loading">지도를 불러오는 중…</p></div>
+          <div class="report" id="report" hidden>
+            <p><b>지금 북항에 계신가요?</b> 부캉이를 본 곳을 지도에 찍어 주세요. 제보가 모이면 🦈 위치가 따라 움직여요.</p>
+            <button class="btn primary" id="report-btn" type="button">지도에서 본 위치 찍기</button>
+            <p class="report-status" id="report-status" role="status" aria-live="polite"></p>
+          </div>
+          <div class="map-links">
+            <a class="btn" id="kakao-route" href="%KAKAO_ROUTE%" target="_blank" rel="noopener">카카오맵 길찾기</a>
+            <a class="btn" href="%NAVER_SEARCH%" target="_blank" rel="noopener">네이버 지도</a>
+          </div>
+          <p class="fine">%LOCATION_ADDRESS% · %LOCATION_ACCESS%. 부캉이에게는 위치 추적 장치가 없어서, 위치는 언론 보도와 현장 관람객 제보(확인되지 않은 정보)를 바탕으로 보여 줘요.</p>
+        </section>
+
         <section class="card cheer" aria-labelledby="cheer-title">
           <h2 id="cheer-title">부캉이 응원하기</h2>
+          <p class="cheer-total global-only" hidden><b id="all-cheerers">-</b>명이 <b id="all-cheers">-</b>번 응원했어요</p>
           <p class="muted">누를 때마다 전국 응원 수가 올라가요</p>
           <button class="cheer-btn" id="cheer-btn" type="button">부캉아 무사히 돌아가! 🙏</button>
           <div class="cheer-stats">
-            <span>내 응원 <b id="my-cheers">0</b></span>
-            <span class="global-only" hidden>전국 응원 <b id="all-cheers">-</b></span>
+            <span>내 응원 <b id="my-cheers">0</b>번</span>
           </div>
         </section>
 
@@ -95,6 +117,11 @@
           <h2 id="goods-title">부캉이 생각나는 상어 굿즈</h2>
           <p class="disclosure" id="goods-disclosure"></p>
           <div class="goods-list" id="goods-list"></div>
+        </section>
+
+        <section class="card faq" aria-labelledby="faq-title">
+          <h2 id="faq-title">자주 묻는 질문</h2>
+          <div class="faq-list">%FAQ%</div>
         </section>
 
         <section class="card safety" aria-labelledby="safety-title">

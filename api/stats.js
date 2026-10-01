@@ -67,13 +67,14 @@ export default async function handler(req, res) {
   }
   try {
     if (req.method === 'GET') {
-      const [[cheers, lure, follow, released]] = await redis([
-        ['MGET', `${P}cheers`, `${P}plays:lure`, `${P}plays:follow`, `${P}released`],
+      const [[cheers, cheerers, lure, follow, released]] = await redis([
+        ['MGET', `${P}cheers`, `${P}cheerers`, `${P}plays:lure`, `${P}plays:follow`, `${P}released`],
       ]);
       res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=60');
       return res.status(200).json({
         enabled: true,
         cheers: Number(cheers) || 0,
+        cheerers: Number(cheerers) || 0,
         plays: { lure: Number(lure) || 0, follow: Number(follow) || 0 },
         released: Number(released) || 0,
       });
@@ -84,9 +85,12 @@ export default async function handler(req, res) {
     const body = readBody(req);
 
     if (body.type === 'cheer') {
+      // first: 이 브라우저의 첫 응원이면 응원한 사람 수도 하나 올린다
       const n = Math.max(1, Math.min(50, Math.floor(Number(body.n)) || 1));
-      const [cheers] = await redis([['INCRBY', `${P}cheers`, n]]);
-      return res.status(200).json({ enabled: true, cheers });
+      const cmds = [['INCRBY', `${P}cheers`, n]];
+      if (body.first === true) cmds.push(['INCR', `${P}cheerers`]);
+      const [cheers, cheerers] = await redis(cmds);
+      return res.status(200).json({ enabled: true, cheers, cheerers: cheerers ?? null });
     }
 
     if (body.type === 'play') {

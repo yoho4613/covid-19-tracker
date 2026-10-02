@@ -31,9 +31,10 @@ export const STATUS = {
   releasedOn: null as string | null,
   nextEvent: {
     date: '2026-10-02',
+    time: '15:30' as string | null, // 시작 시각(KST). 이 시각부터 몇 시간은 화면에 "작전 진행 중"으로 보인다
     title: '그물 유도 작전',
   },
-  updatedAt: '2026-10-01T07:30:00+09:00',
+  updatedAt: '2026-10-02T13:10:00+09:00',
 };
 
 // 부캉이에게는 위치 추적 장치가 없다. 지도에는 보도된 체류 장소를 "일대"로만 표시하고,
@@ -99,9 +100,12 @@ export const TIMELINE: TimelineItem[] = [
   },
   {
     date: '2026-10-02',
-    title: '2차 그물 유도 작전',
-    body: '수로 폭과 깊이에 맞춘 그물망과 워터펌프로 다시 바다 쪽 유도를 시도할 예정이에요.',
-    source: FNNEWS,
+    title: '2차 그물 유도 작전 (오후 3시 30분)',
+    body: '국립수산과학원이 만든 길이 50m·높이 6.8m 그물망을 선박 2척과 인력 10명이 끌어 부캉이를 바다 쪽으로 밀어낼 계획이에요.',
+    source: {
+      name: '연합뉴스',
+      url: 'https://v.daum.net/v/20261001153538803',
+    },
     planned: true,
   },
 ];

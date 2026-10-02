@@ -43,15 +43,29 @@ export function statusView(now = Date.now()): StatusView {
   }
 
   const left = daysUntil(nextEvent.date, now);
+  const start = nextEvent.time ? Date.parse(`${nextEvent.date}T${nextEvent.time}:00+09:00`) : null;
+  const running = mode === 'staying' && start !== null && now >= start && now < start + OPERATION_WINDOW_MS;
+  const afterStart = start !== null && now >= start;
   return {
     ...base,
+    ...(running ? { mode: 'operation', badge: MODE_TEXT.operation.badge, line: MODE_TEXT.operation.line } : {}),
     dayLabel: '북항 수로 체류',
     dayCount: String(dayCount(firstSeen, now)),
     dayUnit: '일째',
-    nextTitle: `${nextEvent.title}${left >= 0 ? ' (예정)' : ''}`,
-    nextDate: formatDate(nextEvent.date),
-    nextDday: left > 0 ? `D-${left}` : left === 0 ? 'D-DAY' : '결과 확인 중',
+    nextTitle: `${nextEvent.title}${running ? '' : left >= 0 && !afterStart ? ' (예정)' : ''}`,
+    nextDate: `${formatDate(nextEvent.date)}${nextEvent.time ? ` ${formatTime(nextEvent.time)}` : ''}`,
+    nextDday: running ? '진행 중' : afterStart || left < 0 ? '결과 확인 중' : left > 0 ? `D-${left}` : 'D-DAY',
   };
+}
+
+// 시작 시각부터 이 시간 동안은 결과가 반영되기 전이라도 "작전 진행 중"으로 보여 준다
+const OPERATION_WINDOW_MS = 4 * 3_600_000;
+
+function formatTime(hhmm: string): string {
+  const [h, m] = hhmm.split(':').map(Number);
+  const ampm = h < 12 ? '오전' : '오후';
+  const h12 = h % 12 || 12;
+  return `${ampm} ${h12}시${m ? ` ${m}분` : ''}`;
 }
 
 export function profileHtml(): string {

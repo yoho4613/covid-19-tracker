@@ -218,7 +218,7 @@ export class MapView {
       return;
     }
     const est = estimate(this.sightings, this.serverNow);
-    const lines = [`<b>보도 기준</b> ${LOCATION.name} 일대`];
+    const lines = [`<b>보도 기준</b> ${LOCATION.latest}`];
     if (this.enabled) {
       const last = this.sightings.at(-1);
       lines.push(

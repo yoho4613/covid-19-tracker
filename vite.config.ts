@@ -40,7 +40,7 @@ function prerenderStatus(): Plugin {
         FAQ: faqHtml(),
         JSON_LD: jsonLd(siteUrl),
         VERIFY_META: verifyMeta(),
-        LOCATION_NAME: escapeHtml(LOCATION.name),
+        LOCATION_LATEST: escapeHtml(LOCATION.latest),
         LOCATION_ADDRESS: escapeHtml(LOCATION.address),
         LOCATION_ACCESS: escapeHtml(LOCATION.access),
         KAKAO_ROUTE: MAP_LINKS.kakaoRoute,

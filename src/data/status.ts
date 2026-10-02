@@ -24,17 +24,21 @@ const HANKOOK: Source = {
   url: 'https://www.hankookilbo.com/news/article/A2026092915160002503',
 };
 
+export interface NextEvent {
+  date: string;
+  time: string | null; // 시작 시각(KST). 이 시각부터 몇 시간은 화면에 "작전 진행 중"으로 보인다
+  title: string;
+}
+
 export const STATUS = {
-  mode: 'staying' as Mode,
+  mode: 'extended' as Mode,
   firstSeen: '2026-09-18',
   // 바다로 돌아간 날 (mode === 'released' 일 때)
   releasedOn: null as string | null,
-  nextEvent: {
-    date: '2026-10-02',
-    time: '15:30' as string | null, // 시작 시각(KST). 이 시각부터 몇 시간은 화면에 "작전 진행 중"으로 보인다
-    title: '그물 유도 작전',
-  },
-  updatedAt: '2026-10-02T13:10:00+09:00',
+  // 예정된 작전. 없으면 null 로 두고 plan 을 보여 준다
+  nextEvent: null as NextEvent | null,
+  plan: '수로 출구 근처에 그물을 고정해 두고 스스로 바다로 나가기를 기다리는 중',
+  updatedAt: '2026-10-02T19:40:00+09:00',
 };
 
 // 부캉이에게는 위치 추적 장치가 없다. 지도에는 보도된 체류 장소를 "일대"로만 표시하고,
@@ -45,6 +49,8 @@ export const LOCATION = {
   lat: 35.1144,
   lng: 129.0464,
   radiusM: 350,
+  // 보도된 최근 위치 설명 (정확한 좌표는 보도되지 않음)
+  latest: '10월 2일 작전 뒤 수로 출구 근처, 바다를 100여 m 앞둔 곳',
   access: '도시철도 1호선 부산역 6번 출구에서 걸어서 약 15분',
   source: {
     name: '더트래블뉴스',
@@ -100,12 +106,11 @@ export const TIMELINE: TimelineItem[] = [
   },
   {
     date: '2026-10-02',
-    title: '2차 그물 유도 작전 (오후 3시 30분)',
-    body: '국립수산과학원이 만든 길이 50m·높이 6.8m 그물망을 선박 2척과 인력 10명이 끌어 부캉이를 바다 쪽으로 밀어낼 계획이에요.',
+    title: '2차 그물 유도 작전, 바다 100여 m 앞에서 중단',
+    body: '길이 50m·높이 6.8m 그물로 부캉이를 수로 출구 쪽까지 밀었지만, 바다를 100~150m 앞두고 그물이 수로 바닥에 걸려 작업이 멈췄어요. 관계기관은 그물을 고정해 안쪽으로 돌아오지 못하게 막고, 부캉이가 스스로 나가기를 기다리기로 했어요.',
     source: {
-      name: '연합뉴스',
-      url: 'https://v.daum.net/v/20261001153538803',
+      name: '세계일보',
+      url: 'https://www.segye.com/newsView/20261002514370',
     },
-    planned: true,
   },
 ];
